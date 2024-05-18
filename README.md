@@ -1,0 +1,2 @@
+# napas-neovim
+neovim config 
