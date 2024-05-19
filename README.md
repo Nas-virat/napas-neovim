@@ -6,16 +6,17 @@ This is my neovim config
 
 ### Core
 
-| Command          | Description                                            |
-| ---------------- | ------------------------------------------------------ |
-| `:qa`            | Quit for all                                           |
-| `:w`             | Save file                                              |
-| `<SPACE BAR>`    | Which key                                              |
-| `jk`             | Shortcut for exit for insert mode (can also use <ESC>) |
-| `<SPACE BAR> +`  | Increment the number                                   |
-| `<SPACE BAR> -`  | Decrement the number                                   |
-| `<SPACE BAR> ws` | Save session                                           |
-| `<SPACE BAR> wr` | Restore the session                                    |
+| Command           | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `:qa`             | Quit for all                                           |
+| `:w`              | Save file                                              |
+| `<SPACE BAR>`     | Which key                                              |
+| `jk`              | Shortcut for exit for insert mode (can also use <ESC>) |
+| `<SPACE BAR> +`   | Increment the number                                   |
+| `<SPACE BAR> -`   | Decrement the number                                   |
+| `<SPACE BAR> ws`  | Save session                                           |
+| `<SPACE BAR> wr`  | Restore the session                                    |
+| `<SPACWE BAR> nh` | Clear highlight search                                 |
 
 ### Nvim-tree
 
@@ -43,15 +44,19 @@ This is my neovim config
 | `<TAB>`         | Change Buffer        |
 | `<SPACE BAR> q` | Close current Buffer |
 
-### Open Terminal
+### Open/Close Terminal
 
-| Command          | Description                      |
-| ---------------- | -------------------------------- |
-| `<SPACE BAR> ch` | Open Terminal (Split Horizontal) |
-| `<SPACE BAR> cf` | Open Terminal (Split Float)      |
+| Command          | Description                                 |
+| ---------------- | ------------------------------------------- |
+| `<SPACE BAR> ch` | Open Terminal (Split Horizontal)            |
+| `<SPACE BAR> cf` | Open Terminal (Split Float)                 |
+| `exit`           | Type exit in terminal to close the terminal |
 
-### Lazygit
+### Git
 
-| Command          | Description  |
-| ---------------- | ------------ |
-| `<SPACE BAR> lg` | Open Lazygit |
+| Command          | Description                  |
+| ---------------- | ---------------------------- |
+| `<SPACE BAR> lg` | Open Lazygit                 |
+| `<SPACE BAR> ge` | Enable git blame             |
+| `<SPACE BAR> gd` | Disable git blame            |
+| `<SPACE BAR> go` | Open code on default browser |
