@@ -2,6 +2,21 @@
 
 This is my neovim config
 
+## Setup
+
+[gopls](https://github.com/golang/tools/tree/master/gopls)
+
+```
+go install golang.org/x/tools/gopls@latest
+```
+
+### Install NerdFont
+
+```bash
+brew tap homebrew/cask-fonts
+brew install font-meslo-lg-nerd-font
+```
+
 ## HotKey
 
 ### Core

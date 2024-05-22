@@ -143,7 +143,7 @@ return {
 				})
 			end,
 			["gopls"] = function()
-				-- configure emmet language server
+				-- configure gopls language server
 				lspconfig["gopls"].setup({
 					capabilities = capabilities,
 					filetypes = { "go", "gomod", "gowork", "gotmpl" },
@@ -154,6 +154,90 @@ return {
 							usePlaceholders = true,
 							analyses = {
 								unusedparams = true,
+							},
+						},
+					},
+				})
+			end,
+			["jdtls"] = function()
+				-- configure jdtls (Java Development Tools Language Server)
+				lspconfig["jdtls"].setup({
+					capabilities = capabilities,
+					root_dir = function(fname)
+						return util.root_pattern(".git")(fname) or util.path.dirname(fname)
+					end,
+					settings = {
+						java = {
+							signatureHelp = { enabled = true },
+							contentProvider = { preferred = "fernflower" },
+						},
+					},
+					on_attach = function(client, bufnr)
+						-- Key mappings for Java specific features
+						keymap.set(
+							"n",
+							"<leader>jo",
+							"<cmd>lua require'jdtls'.organize_imports()<CR>",
+							{ buffer = bufnr, silent = true, desc = "Organize Imports" }
+						)
+						keymap.set(
+							"n",
+							"<leader>jv",
+							"<cmd>lua require'jdtls'.extract_variable()<CR>",
+							{ buffer = bufnr, silent = true, desc = "Extract Variable" }
+						)
+						keymap.set(
+							"v",
+							"<leader>jv",
+							"<cmd>lua require'jdtls'.extract_variable(true)<CR>",
+							{ buffer = bufnr, silent = true, desc = "Extract Variable" }
+						)
+						keymap.set(
+							"n",
+							"<leader>jc",
+							"<cmd>lua require'jdtls'.extract_constant()<CR>",
+							{ buffer = bufnr, silent = true, desc = "Extract Constant" }
+						)
+						keymap.set(
+							"v",
+							"<leader>jc",
+							"<cmd>lua require'jdtls'.extract_constant(true)<CR>",
+							{ buffer = bufnr, silent = true, desc = "Extract Constant" }
+						)
+						keymap.set(
+							"v",
+							"<leader>jm",
+							"<cmd>lua require'jdtls'.extract_method(true)<CR>",
+							{ buffer = bufnr, silent = true, desc = "Extract Method" }
+						)
+					end,
+				})
+			end,
+			["kotlin_language_server"] = function()
+				-- configure gopls language server
+				lspconfig["kotlin_language_server"].setup({
+					capabilities = capabilities,
+					root_dir = util.root_pattern(
+						"settings.gradle",
+						"settings.gradle.kts",
+						"build.gradle",
+						"build.gradle.kts",
+						".git"
+					),
+				})
+			end,
+			["pyright"] = function()
+				-- configure pyright (Python Language Server)
+				lspconfig["pyright"].setup({
+					capabilities = capabilities,
+					root_dir = util.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt"),
+					settings = {
+						python = {
+							analysis = {
+								typeCheckingMode = "strict",
+								autoSearchPaths = true,
+								useLibraryCodeForTypes = true,
+								diagnosticMode = "workspace",
 							},
 						},
 					},
