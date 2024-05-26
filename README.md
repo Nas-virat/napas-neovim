@@ -32,6 +32,7 @@ brew install font-meslo-lg-nerd-font
 | `<SPACE BAR> ws`  | Save session                                           |
 | `<SPACE BAR> wr`  | Restore the session                                    |
 | `<SPACWE BAR> nh` | Clear highlight search                                 |
+| `CTRL + ]`        | Go to function that cursor is cover                    |
 
 ### Nvim-tree
 
@@ -54,10 +55,11 @@ brew install font-meslo-lg-nerd-font
 
 ### Bufferline
 
-| Command         | Description          |
-| --------------- | -------------------- |
-| `<TAB>`         | Change Buffer        |
-| `<SPACE BAR> q` | Close current Buffer |
+| Command         | Description                   |
+| --------------- | ----------------------------- |
+| `<TAB>`         | Change to the next Buffer     |
+| `<TAB> <CTRL>`  | Change to the previous Buffer |
+| `<SPACE BAR> q` | Close current Buffer          |
 
 ### Open/Close Terminal
 

@@ -170,6 +170,15 @@ return {
 						java = {
 							signatureHelp = { enabled = true },
 							contentProvider = { preferred = "fernflower" },
+							completion = {
+								-- Enable auto-imports
+								importOrder = {
+									"java",
+									"javax",
+									"com",
+									"org",
+								},
+							},
 						},
 					},
 					on_attach = function(client, bufnr)
@@ -214,7 +223,7 @@ return {
 				})
 			end,
 			["kotlin_language_server"] = function()
-				-- configure gopls language server
+				-- configure Kotlin Language Server
 				lspconfig["kotlin_language_server"].setup({
 					capabilities = capabilities,
 					root_dir = util.root_pattern(
@@ -224,6 +233,20 @@ return {
 						"build.gradle.kts",
 						".git"
 					),
+					on_attach = function(client, bufnr)
+						-- Automatically apply code actions for auto-import
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							buffer = bufnr,
+							callback = function()
+								vim.lsp.buf.code_action({
+									apply = true,
+									context = {
+										only = { "source.organizeImports" },
+									},
+								})
+							end,
+						})
+					end,
 				})
 			end,
 			["pyright"] = function()
