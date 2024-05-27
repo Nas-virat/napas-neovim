@@ -2,6 +2,52 @@
 
 This is my neovim config
 
+## Install Neovim
+
+### macOS / OS X
+
+#### Pre-built archives
+
+The [Releases](https://github.com/neovim/neovim/releases) page provides pre-built binaries for macOS 10.15+.
+
+For x86_64:
+
+    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-x86_64.tar.gz
+    tar xzf nvim-macos-x86_64.tar.gz
+    ./nvim-macos-x86_64/bin/nvim
+
+For arm64:
+
+    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz
+    tar xzf nvim-macos-arm64.tar.gz
+    ./nvim-macos-arm64/bin/nvim
+
+### [Homebrew](https://brew.sh) on macOS or Linux
+
+    brew install neovim
+
+### Linux
+
+#### Pre-built archives
+
+The [Releases](https://github.com/neovim/neovim/releases) page provides pre-built binaries for Linux systems.
+
+```sh
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+sudo rm -rf /opt/nvim
+sudo tar -C /opt -xzf nvim-linux64.tar.gz
+```
+
+After this step add this to `~/.bashrc`:
+
+    export PATH="$PATH:/opt/nvim-linux64/bin"
+
+#### Debian
+
+Neovim is in [Debian](https://packages.debian.org/search?keywords=neovim).
+
+    sudo apt-get install neovim
+
 ## Setup
 
 [gopls](https://github.com/golang/tools/tree/master/gopls)
@@ -33,6 +79,7 @@ brew install font-meslo-lg-nerd-font
 | `<SPACE BAR> wr`  | Restore the session                                    |
 | `<SPACWE BAR> nh` | Clear highlight search                                 |
 | `CTRL + ]`        | Go to function that cursor is cover                    |
+| `CTRL + o`        | Return to previous file (use after command CTRL + ])   |
 
 ### Nvim-tree
 
