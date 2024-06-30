@@ -80,6 +80,7 @@ brew install font-meslo-lg-nerd-font
 | `<SPACWE BAR> nh` | Clear highlight search                                 |
 | `CTRL + ]`        | Go to function that cursor is cover                    |
 | `CTRL + o`        | Return to previous file (use after command CTRL + ])   |
+| `<SPACE BAR> ee`  | close and open file explorer                           |
 
 ### Nvim-tree
 
@@ -110,11 +111,10 @@ brew install font-meslo-lg-nerd-font
 
 ### Open/Close Terminal
 
-| Command          | Description                                 |
-| ---------------- | ------------------------------------------- |
-| `<SPACE BAR> ch` | Open Terminal (Split Horizontal)            |
-| `<SPACE BAR> cf` | Open Terminal (Split Float)                 |
-| `exit`           | Type exit in terminal to close the terminal |
+| Command             | Description                                 |
+| ------------------- | ------------------------------------------- |
+| `<Ctrl> t`          | Open/Close Terminal (float)                 |
+| `exit or <Ctrl> t ` | Type exit in terminal to close the terminal |
 
 ### Git
 

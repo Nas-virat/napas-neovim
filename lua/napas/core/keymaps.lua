@@ -21,10 +21,6 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) -- g
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) -- go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) -- open current buffer in new tab
 
--- terminal
-keymap.set("n", "<leader>cf", "<cmd>ToggleTerm direction=float<CR>", { desc = "Open Terminal Float " }) -- open terminal
-keymap.set("n", "<leader>ch", "<cmd>ToggleTerm<CR>", { desc = "Open Horizontally Terminal" }) -- open terminal
-
 -- git blame
 keymap.set("n", "<leader>ge", "<cmd>GitBlameEnable<CR>", { desc = "Enable git blame message" }) -- enable git blame message
 keymap.set("n", "<leader>gd", "<cmd>GitBlameDisable<CR>", { desc = "Disable git blame message" }) -- disable git blame
