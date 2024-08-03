@@ -5,6 +5,23 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} },
+		{
+			"MysticalDevil/inlay-hints.nvim",
+			event = "LspAttach",
+		},
+		{
+			-- https://github.com/mfussenegger/nvim-jdtils
+			"mfussenegger/nvim-jdtls",
+			ft = "java",
+		},
+		{
+			"simaxme/java.nvim",
+			ft = "java",
+		},
+		{
+			"elmcgill/springboot-nvim",
+			ft = "java",
+		},
 	},
 	config = function()
 		-- import lspconfig plugin
