@@ -19,4 +19,7 @@ require("lazy").setup({ { import = "napas.plugins" }, { import = "napas.plugins.
 	change_detection = {
 		notify = false,
 	},
+	spec = {
+		{ import = "lazyvim.plugins.extras.test.core" },
+	},
 })

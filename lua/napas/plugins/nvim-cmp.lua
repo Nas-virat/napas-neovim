@@ -60,7 +60,10 @@ return {
 			},
 			window = {
 				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
+				documentation = cmp.config.window.bordered({
+					border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+					winhighlight = "Normal:CmpDocumentation,FloatBorder:CmpDocumentationBorder",
+				}),
 			},
 		})
 	end,

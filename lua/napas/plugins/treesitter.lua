@@ -64,6 +64,9 @@ return {
 				"vimdoc",
 				"c",
 				"java",
+				"go",
+				"helm",
+				"kotlin",
 			},
 			incremental_selection = {
 				enable = true,
