@@ -82,6 +82,15 @@ brew install font-meslo-lg-nerd-font
 | `CTRL + o`        | Return to previous file (use after command CTRL + ])   |
 | `<SPACE BAR> ee`  | close and open file explorer                           |
 
+### LSP
+
+| Command | Description                  |
+| ------- | ---------------------------- |
+| `gd`    | go to description            |
+| `gi`    | go to implementation         |
+| `ca`    | code action (list of action) |
+| `gR`    | show LSP reference           |
+
 ### Nvim-tree
 
 | Command          | Description                                 |

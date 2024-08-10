@@ -50,4 +50,15 @@ return {
 			})
 		end,
 	},
+	{
+		"sindrets/diffview.nvim",
+		config = function()
+			local wk = require("which-key")
+			wk.add({
+				{ "<leader>do", "<cmd>DiffviewOpen<cr>", desc = "DiffviewOpen", mode = "n" },
+				{ "<leader>dc", "<cmd>DiffviewClose<cr>", desc = "DiffviewClose", mode = "n" },
+				{ "<leader>dh", "<cmd>DiffviewFileHistory<cr>", desc = "DiffviewFileHistory", mode = "n" },
+			})
+		end,
+	},
 }
