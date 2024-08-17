@@ -9,7 +9,7 @@ local M = {
 		--   `nvim-notify` is only needed, if you want to use the notification view.
 		--   If not available, we use `mini` as the fallback
 		{ "rcarriga/nvim-notify", module = "notify" },
-		{ "mrded/nvim-lsp-notify", module = "lsp-notify" },
+		-- { "mrded/nvim-lsp-notify", module = "lsp-notify" },
 	},
 }
 
@@ -19,9 +19,9 @@ function M.config()
 		stages = "fade",
 		background_colour = "#000000",
 	})
-	require("lsp-notify").setup({
+	--[[ require("lsp-notify").setup({
 		notify = require("notify"),
-	})
+	}) ]]
 	require("noice").setup({
 		lsp = {
 			progress = {
@@ -43,7 +43,7 @@ function M.config()
 			lsp_doc_border = false, -- add a border to hover docs and signature help
 		},
 	})
-	require("transparent").clear_prefix("Notify")
+	-- require("transparent").clear_prefix("Notify")
 end
 
 return M

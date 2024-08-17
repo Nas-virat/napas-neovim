@@ -67,6 +67,8 @@ return {
 				"go",
 				"helm",
 				"kotlin",
+				"http",
+				"xml",
 			},
 			incremental_selection = {
 				enable = true,

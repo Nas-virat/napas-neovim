@@ -81,15 +81,17 @@ brew install font-meslo-lg-nerd-font
 | `CTRL + ]`        | Go to function that cursor is cover                    |
 | `CTRL + o`        | Return to previous file (use after command CTRL + ])   |
 | `<SPACE BAR> ee`  | close and open file explorer                           |
+| `<SPACE BAR> /`   | comment and uncomment                                  |
 
 ### LSP
 
-| Command | Description                  |
-| ------- | ---------------------------- |
-| `gd`    | go to description            |
-| `gi`    | go to implementation         |
-| `ca`    | code action (list of action) |
-| `gR`    | show LSP reference           |
+| Command          | Description                    |
+| ---------------- | ------------------------------ |
+| `gd`             | go to description              |
+| `gi`             | go to implementation           |
+| `gR`             | show LSP reference             |
+| `<SPACE BAr> ca` | code action (list of action)   |
+| `shift k`        | show documentation of function |
 
 ### Nvim-tree
 
@@ -101,6 +103,7 @@ brew install font-meslo-lg-nerd-font
 | `d`              | Delete file when in cursor in file explorer |
 | `r`              | Rename file name                            |
 | `<SPACE BAR> ee` | Open File Explorer                          |
+| `<SPACE BAR> ef` | Open File Explorer with current file        |
 
 ### TeleScope
 

@@ -41,7 +41,7 @@ return {
 			function()
 				require("neotest").run.stop()
 			end,
-			desc = "Stop stop",
+			desc = "Stop Test",
 		},
 		{
 			"<leader>TS",

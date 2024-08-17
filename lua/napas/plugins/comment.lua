@@ -2,7 +2,10 @@ return {
 	"numToStr/Comment.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"JoosepAlviste/nvim-ts-context-commentstring",
+		{
+			"JoosepAlviste/nvim-ts-context-commentstring",
+			event = "VeryLazy",
+		},
 	},
 	config = function()
 		-- import comment plugin safely
@@ -15,5 +18,19 @@ return {
 			-- for commenting tsx, jsx, svelte, html files
 			pre_hook = ts_context_commentstring.create_pre_hook(),
 		})
+
+		vim.api.nvim_set_keymap(
+			"n",
+			"<leader>/",
+			"<Plug>(comment_toggle_linewise_current)",
+			{ noremap = true, silent = true, desc = "Comment" }
+		)
+
+		vim.api.nvim_set_keymap(
+			"v",
+			"<leader>/",
+			"<Plug>(comment_toggle_linewise_visual)",
+			{ noremap = true, silent = true, desc = "Comment" }
+		)
 	end,
 }
