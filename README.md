@@ -63,6 +63,12 @@ brew tap homebrew/cask-fonts
 brew install font-meslo-lg-nerd-font
 ```
 
+### Install ripgrep
+
+```bash
+sudo apt-get install ripgrep
+```
+
 ## HotKey
 
 ### Core
@@ -82,6 +88,7 @@ brew install font-meslo-lg-nerd-font
 | `CTRL + o`        | Return to previous file (use after command CTRL + ])   |
 | `<SPACE BAR> ee`  | close and open file explorer                           |
 | `<SPACE BAR> /`   | comment and uncomment                                  |
+| `za`              | code folding                                           |
 
 ### LSP
 
@@ -102,6 +109,9 @@ brew install font-meslo-lg-nerd-font
 | `a`              | Add a new file when cursor in file explorer |
 | `d`              | Delete file when in cursor in file explorer |
 | `r`              | Rename file name                            |
+| `c`              | Copy to clipboard                           | 
+| `p`              | Paste clipboard                             |
+| `x`              | Cut and copy to clipboard                   |
 | `<SPACE BAR> ee` | Open File Explorer                          |
 | `<SPACE BAR> ef` | Open File Explorer with current file        |
 
