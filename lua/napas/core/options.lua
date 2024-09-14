@@ -33,3 +33,12 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 -- spilt.windows
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true --split horizontal window to the bottom
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = vim.api.nvim_create_augroup('highlight_yank', {}),
+  desc = 'Hightlight selection on yank',
+  pattern = '*',
+  callback = function()
+    vim.highlight.on_yank { higroup = 'IncSearch', timeout = 250 }
+  end,
+})
