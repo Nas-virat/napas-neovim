@@ -147,4 +147,13 @@ sudo apt-get install ripgrep
 | `<SPACE BAR> ge` | Enable git blame             |
 | `<SPACE BAR> gd` | Disable git blame            |
 | `<SPACE BAR> go` | Open code on default browser |
- `<SPACE BAR> go` | Open code on default browser |
+| `<SPACE BAR> go` | Open code on default browser |
+
+
+### vim-multi-visual
+
+| Command          | Description                          |
+| ---------------- | -------------------------------------|
+| `\\c`            | (Visual block mode) VM_visual_cursor |
+| `<C-down arrow>` | (Normal mode) add visual cursor      |
+
