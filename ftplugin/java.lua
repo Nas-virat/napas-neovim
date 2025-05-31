@@ -37,7 +37,7 @@ local config = {
 	-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
 	cmd = {
 		-- "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java",
-		"/opt/homebrew/opt/openjdk@17/bin/java",
+		"java",
 		"-Declipse.application=org.eclipse.jdt.ls.core.id1",
 		"-Dosgi.bundles.defaultStartLevel=4",
 		"-Declipse.product=org.eclipse.jdt.ls.core.product",
@@ -122,7 +122,7 @@ local config = {
 				enabled = true,
 				-- Formatting works by default, but you can refer to a specific file/URL if you choose
 				settings = {
-					url = "https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml",
+					-- url = "https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml",
 					session_file = "~/.config/nvim/formatconf/java-google-style.xml",
 					-- url = "~/.config/nvim/formatconf/java-google-style.xml",
 					profile = "GoogleStyle",
@@ -171,6 +171,50 @@ local config = {
 	},
 }
 
+-- Add dap configurations based on your language/adapter settings
+-- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+require("dap").configurations.java = {
+	{
+		name = "Debug Launch (2GB)",
+		type = "java",
+		request = "launch",
+		vmArgs = "" .. "-Xmx2g ",
+	},
+	{
+		name = "Debug Attach (8000)",
+		type = "java",
+		request = "attach",
+		hostName = "127.0.0.1",
+		port = 8000,
+	},
+	{
+		name = "Debug Attach (5005)",
+		type = "java",
+		request = "attach",
+		hostName = "127.0.0.1",
+		port = 5005,
+	},
+	{
+		name = "My Custom Java Run Configuration",
+		type = "java",
+		request = "launch",
+		-- You need to extend the classPath to list your dependencies.
+		-- `nvim-jdtls` would automatically add the `classPaths` property if it is missing
+		-- classPaths = {},
+
+		-- If using multi-module projects, remove otherwise.
+		-- projectName = "yourProjectName",
+
+		-- javaExec = "java",
+		mainClass = "replace.with.your.fully.qualified.MainClass",
+
+		-- If using the JDK9+ module system, this needs to be extended
+		-- `nvim-jdtls` would automatically populate this property
+		-- modulePaths = {},
+		vmArgs = "" .. "-Xmx2g ",
+	},
+}
+
 -- Needed for debugging
 config["on_attach"] = function(client, bufnr)
 	jdtls.setup_dap({
@@ -184,25 +228,25 @@ config["on_attach"] = function(client, bufnr)
 	require("jdtls.dap").setup_dap_main_class_configs()
 
 	-- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
-	vim.keymap.set("n", "<leader>,oi", function()
+	vim.keymap.set("n", "<leader>jo", function()
 		if vim.bo.filetype == "java" then
 			require("jdtls").organize_imports()
 		end
 	end)
 
-	vim.keymap.set("n", "<leader>,uc", function()
+	vim.keymap.set("n", "<leader>juc", function()
 		if vim.bo.filetype == "java" then
 			require("jdtls").update_projects_config()
 		end
 	end)
 
-	vim.keymap.set("n", "<leader>,tc", function()
+	vim.keymap.set("n", "<leader>jtc", function()
 		if vim.bo.filetype == "java" then
 			require("jdtls").test_class()
 		end
 	end)
 
-	vim.keymap.set("n", "<leader>,tm", function()
+	vim.keymap.set("n", "<leader>jtn", function()
 		if vim.bo.filetype == "java" then
 			require("jdtls").test_nearest_method()
 		end

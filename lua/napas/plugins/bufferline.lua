@@ -36,8 +36,8 @@ return {
 			},
 		})
 		-- Keybindings for Bufferline
-		vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
-		vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+		vim.api.nvim_set_keymap("n", "H", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
+		vim.api.nvim_set_keymap("n", "L", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
 
 		-- Keybinding to close the current buffer
 		vim.keymap.set(

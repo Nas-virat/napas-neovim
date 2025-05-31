@@ -6,6 +6,8 @@ return {
 		"antoinemadec/FixCursorHold.nvim",
 		"haydenmeade/neotest-jest",
 		"fredrikaverpil/neotest-golang",
+		{ "dsych/blanket.nvim", ft = "java" },
+		{ "rcasia/neotest-java", ft = "java" },
 	},
 	keys = {
 		{
