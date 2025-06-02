@@ -28,9 +28,6 @@ return {
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
 
-		-- import mason_lspconfig plugin
-		local mason_lspconfig = require("mason-lspconfig")
-
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -62,6 +59,13 @@ return {
 				},
 			}),
 		})
+
+		require("lspconfig").html.setup({})
+		require("lspconfig").gopls.setup({})
+		require("lspconfig").cssls.setup({})
+		require("lspconfig").jsonls.setup({})
+		require("lspconfig").tailwindcss.setup({})
+		require("lspconfig").ts_ls.setup({})
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -122,193 +126,5 @@ return {
 			local hl = "DiagnosticSign" .. type
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
-
-		mason_lspconfig.setup_handlers({
-			-- default handler for installed servers
-			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
-			end,
-			["svelte"] = function()
-				-- configure svelte server
-				lspconfig["svelte"].setup({
-					capabilities = capabilities,
-					on_attach = function(client, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.js", "*.ts" },
-							callback = function(ctx)
-								-- Here use ctx.match instead of ctx.file
-								client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-							end,
-						})
-					end,
-				})
-			end,
-			["graphql"] = function()
-				-- configure graphql language server
-				lspconfig["graphql"].setup({
-					capabilities = capabilities,
-					filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-				})
-			end,
-			["emmet_ls"] = function()
-				-- configure emmet language server
-				lspconfig["emmet_ls"].setup({
-					capabilities = capabilities,
-					filetypes = {
-						"html",
-						"typescriptreact",
-						"javascriptreact",
-						"css",
-						"sass",
-						"scss",
-						"less",
-						"svelte",
-					},
-				})
-			end,
-			["lua_ls"] = function()
-				-- configure lua server (with special settings)
-				lspconfig["lua_ls"].setup({
-					capabilities = capabilities,
-					settings = {
-						Lua = {
-							-- make the language server recognize "vim" global
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
-					},
-				})
-			end,
-			["gopls"] = function()
-				-- configure gopls language server
-				lspconfig["gopls"].setup({
-					capabilities = capabilities,
-					filetypes = { "go", "gomod", "gowork", "gotmpl" },
-					rootdir = util.root_pattern("go.work", "go.mod", ".git"),
-					settings = {
-						gopls = {
-							completeUnimported = true,
-							usePlaceholders = true,
-							analyses = {
-								unusedparams = true,
-							},
-						},
-					},
-				})
-			end,
-			["jdtls"] = function()
-				-- configure jdtls (Java Development Tools Language Server)
-				lspconfig["jdtls"].setup({
-					capabilities = capabilities,
-					root_dir = function(fname)
-						return util.root_pattern(".git")(fname) or util.path.dirname(fname)
-					end,
-					settings = {
-						java = {
-							signatureHelp = { enabled = true },
-							contentProvider = { preferred = "fernflower" },
-							completion = {
-								-- Enable auto-imports
-								importOrder = {
-									"java",
-									"javax",
-									"com",
-									"org",
-								},
-							},
-						},
-					},
-					on_attach = function(client, bufnr)
-						-- Key mappings for Java specific features
-						keymap.set(
-							"n",
-							"<leader>jo",
-							"<cmd>lua require'jdtls'.organize_imports()<CR>",
-							{ buffer = bufnr, silent = true, desc = "Organize Imports" }
-						)
-						keymap.set(
-							"n",
-							"<leader>jv",
-							"<cmd>lua require'jdtls'.extract_variable()<CR>",
-							{ buffer = bufnr, silent = true, desc = "Extract Variable" }
-						)
-						keymap.set(
-							"v",
-							"<leader>jv",
-							"<cmd>lua require'jdtls'.extract_variable(true)<CR>",
-							{ buffer = bufnr, silent = true, desc = "Extract Variable" }
-						)
-						keymap.set(
-							"n",
-							"<leader>jc",
-							"<cmd>lua require'jdtls'.extract_constant()<CR>",
-							{ buffer = bufnr, silent = true, desc = "Extract Constant" }
-						)
-						keymap.set(
-							"v",
-							"<leader>jc",
-							"<cmd>lua require'jdtls'.extract_constant(true)<CR>",
-							{ buffer = bufnr, silent = true, desc = "Extract Constant" }
-						)
-						keymap.set(
-							"v",
-							"<leader>jm",
-							"<cmd>lua require'jdtls'.extract_method(true)<CR>",
-							{ buffer = bufnr, silent = true, desc = "Extract Method" }
-						)
-					end,
-				})
-			end,
-			["kotlin_language_server"] = function()
-				-- configure Kotlin Language Server
-				lspconfig["kotlin_language_server"].setup({
-					capabilities = capabilities,
-					root_dir = util.root_pattern(
-						"settings.gradle",
-						"settings.gradle.kts",
-						"build.gradle",
-						"build.gradle.kts",
-						".git"
-					),
-					on_attach = function(client, bufnr)
-						-- Automatically apply code actions for auto-import
-						vim.api.nvim_create_autocmd("BufWritePre", {
-							buffer = bufnr,
-							callback = function()
-								vim.lsp.buf.code_action({
-									apply = true,
-									context = {
-										only = { "source.organizeImports" },
-									},
-								})
-							end,
-						})
-					end,
-				})
-			end,
-			["pyright"] = function()
-				-- configure pyright (Python Language Server)
-				lspconfig["pyright"].setup({
-					capabilities = capabilities,
-					root_dir = util.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt"),
-					settings = {
-						python = {
-							analysis = {
-								typeCheckingMode = "strict",
-								autoSearchPaths = true,
-								useLibraryCodeForTypes = true,
-								diagnosticMode = "workspace",
-							},
-						},
-					},
-				})
-			end,
-		})
 	end,
 }

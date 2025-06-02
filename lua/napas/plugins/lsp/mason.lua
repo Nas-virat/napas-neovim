@@ -1,56 +1,56 @@
 return {
-	"williamboman/mason.nvim",
+	"mason-org/mason-lspconfig.nvim",
+	opts = {
+
+		ensure_installed = {
+			"html",
+			"cssls",
+			"tailwindcss",
+			"emmet_ls",
+			"lua_ls",
+			"jdtls",
+			"gopls",
+			"bashls",
+			"jsonls",
+			"ast_grep",
+			"pyright",
+			"angularls",
+			"markdown_oxide",
+			"kotlin_language_server",
+		},
+	},
 	dependencies = {
-		"williamboman/mason-lspconfig.nvim",
+		{ "mason-org/mason.nvim", opts = {} },
+		"neovim/nvim-lspconfig",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		"mason-org/mason-registry",
 	},
 	config = function()
-		-- import mason
-		local mason = require("mason")
-
-		-- import mason-lspconfig
-		local mason_lspconfig = require("mason-lspconfig")
-
-		local mason_tool_installer = require("mason-tool-installer")
-
-		-- enable mason and configure icons
-		mason.setup({
+		local tools = {
+			"prettier", -- prettier formatter
+			"stylua", -- lua formatter
+			"isort", -- python formatter
+			"black", -- python formatter
+			"pylint",
+			"eslint_d",
+			"ast_grep",
+			"java-debug-adapter",
+			"java-test",
+			"google-java-format",
+			"golangci-lint",
+			"markdownlint",
+		}
+		require("mason").setup({
 			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
-				},
+				border = "rounded",
 			},
 		})
 
-		mason_lspconfig.setup({
-			-- list of servers for mason to install
-			ensure_installed = {
-				"html",
-				"cssls",
-				"tailwindcss",
-				"svelte",
-				"lua_ls",
-				"graphql",
-				"emmet_ls",
-				"prismals",
-				"pyright",
-				"gopls",
-				"jdtls",
-				"kotlin_language_server",
-			},
+		require("mason-lspconfig").setup({
+			automatic_enable = false,
 		})
-
-		mason_tool_installer.setup({
-			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
-				"pylint",
-				"eslint_d",
-			},
+		require("mason-tool-installer").setup({
+			ensure_installed = tools,
 		})
 	end,
 }
