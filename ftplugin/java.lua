@@ -55,9 +55,9 @@ local config = {
 		"-jar",
 		equinox_launcher_path,
 
-		-- TODO Update this to point to the correct jdtls subdirectory for your OS (config_linux, config_mac, config_win, etc)
+		-- Linux configuration (change to config_mac_arm for macOS)
 		"-configuration",
-		vim.env.HOME .. "/.local/share/nvim/mason/packages/jdtls/config_mac_arm",
+		vim.env.HOME .. "/.local/share/nvim/mason/packages/jdtls/config_linux",
 		"-data",
 		workspace_dir,
 	},
@@ -67,34 +67,29 @@ local config = {
 	-- root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "pom.xml", "build.gradle" }),
 	root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
 
-	-- Here you can configure eclipse.jdt.ls specific settings
-	-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-	settings = {
-		java = {
-			-- TODO Replace this with the absolute path to your main java version (JDK 17 or higher)
-			home = "/opt/homebrew/opt/openjdk@22/libexec/openjdk.jdk/Contents/Home",
-			eclipse = {
-				downloadSources = true,
-			},
-			configuration = {
-				updateBuildConfiguration = "interactive",
-				-- TODO Update this by adding any runtimes that you need to support your Java projects and removing any that you don't have installed
-				-- The runtime name parameters need to match specific Java execution environments.  See https://github.com/tamago324/nlsp-settings.nvim/blob/2a52e793d4f293c0e1d61ee5794e3ff62bfbbb5d/schemas/_generated/jdtls.json#L317-L334
-				runtimes = {
-					{
-						name = "JavaSE-11",
-						path = "/opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home",
-					},
-					{
-						name = "JavaSE-17",
-						path = "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
-					},
-					{
-						name = "JavaSE-21",
-						path = "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home",
+		-- Here you can configure eclipse.jdt.ls specific settings
+		-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+		settings = {
+			java = {
+				-- Java home using SDKMAN
+				home = vim.env.HOME .. "/.sdkman/candidates/java/17.0.14-jbr",
+				eclipse = {
+					downloadSources = true,
+				},
+				configuration = {
+					updateBuildConfiguration = "interactive",
+					-- Java runtimes using SDKMAN
+					runtimes = {
+						{
+							name = "JavaSE-17",
+							path = vim.env.HOME .. "/.sdkman/candidates/java/17.0.14-jbr",
+						},
+						{
+							name = "JavaSE-21",
+							path = vim.env.HOME .. "/.sdkman/candidates/java/21.0.7-jbr",
+						},
 					},
 				},
-			},
 			-- Decompiler (should have a decompiler bundle on init options)
 			contentProvider = {
 				preferred = "fernflower",
@@ -215,51 +210,81 @@ require("dap").configurations.java = {
 	},
 }
 
--- Needed for debugging
 config["on_attach"] = function(client, bufnr)
+	local keymap = vim.keymap
+	local opts = { buffer = bufnr, silent = true }
+
 	jdtls.setup_dap({
 		hotcodereplace = "auto",
-		config_overrides = {
-			-- cwd = ".",
-			-- vmArgs = "",
-			-- noDebug = false,
-		},
+		config_overrides = {},
 	})
 	require("jdtls.dap").setup_dap_main_class_configs()
 
-	-- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
-	vim.keymap.set("n", "<leader>jo", function()
-		if vim.bo.filetype == "java" then
-			require("jdtls").organize_imports()
-		end
-	end)
+	opts.desc = "Show LSP references"
+	keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
 
-	vim.keymap.set("n", "<leader>juc", function()
-		if vim.bo.filetype == "java" then
-			require("jdtls").update_projects_config()
-		end
-	end)
+	opts.desc = "Go to declaration"
+	keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 
-	vim.keymap.set("n", "<leader>jtc", function()
-		if vim.bo.filetype == "java" then
-			require("jdtls").test_class()
-		end
-	end)
+	opts.desc = "Show LSP definitions"
+	keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 
-	vim.keymap.set("n", "<leader>jtn", function()
-		if vim.bo.filetype == "java" then
-			require("jdtls").test_nearest_method()
-		end
-	end)
+	opts.desc = "Show LSP implementations"
+	keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+
+	opts.desc = "Show LSP type definitions"
+	keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+
+	opts.desc = "See available code actions"
+	keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+
+	opts.desc = "Smart rename"
+	keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+
+	opts.desc = "Show buffer diagnostics"
+	keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+
+	opts.desc = "Show line diagnostics"
+	keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+
+	opts.desc = "Go to previous diagnostic"
+	keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+
+	opts.desc = "Go to next diagnostic"
+	keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+	opts.desc = "Show documentation for what is under cursor"
+	keymap.set("n", "K", vim.lsp.buf.hover, opts)
+
+	opts.desc = "Restart LSP"
+	keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+
+	opts.desc = "Organize imports"
+	keymap.set("n", "<leader>jo", function()
+		require("jdtls").organize_imports()
+	end, opts)
+
+	opts.desc = "Update project config"
+	keymap.set("n", "<leader>juc", function()
+		require("jdtls").update_projects_config()
+	end, opts)
+
+	opts.desc = "Test class"
+	keymap.set("n", "<leader>jtc", function()
+		require("jdtls").test_class()
+	end, opts)
+
+	opts.desc = "Test nearest method"
+	keymap.set("n", "<leader>jtn", function()
+		require("jdtls").test_nearest_method()
+	end, opts)
 
 	local springboot_nvim = require("springboot-nvim")
-
-	vim.keymap.set("n", "<leader>jr", springboot_nvim.boot_run, { desc = "Spring Boot Run Project" })
-	vim.keymap.set("n", "<leader>jc", springboot_nvim.generate_class, { desc = "Java Create Class" })
-	vim.keymap.set("n", "<leader>ji", springboot_nvim.generate_interface, { desc = "Java Create Interface" })
-	vim.keymap.set("n", "<leader>je", springboot_nvim.generate_enum, { desc = "Java Create Enum" })
+	keymap.set("n", "<leader>jr", springboot_nvim.boot_run, { desc = "Spring Boot Run Project" })
+	keymap.set("n", "<leader>jc", springboot_nvim.generate_class, { desc = "Java Create Class" })
+	keymap.set("n", "<leader>ji", springboot_nvim.generate_interface, { desc = "Java Create Interface" })
+	keymap.set("n", "<leader>je", springboot_nvim.generate_enum, { desc = "Java Create Enum" })
 	springboot_nvim.setup()
 end
 
--- This starts a new client & server, or attaches to an existing client & server based on the `root_dir`.
 jdtls.start_or_attach(config)

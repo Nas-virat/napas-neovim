@@ -17,6 +17,7 @@ return {
 			"angularls",
 			"markdown_oxide",
 			"kotlin_language_server",
+			"robotframework_ls",
 		},
 	},
 	dependencies = {

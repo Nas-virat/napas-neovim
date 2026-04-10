@@ -25,19 +25,12 @@ return {
 		},
 	},
 	config = function()
-		-- import lspconfig plugin
-		local lspconfig = require("lspconfig")
-
-		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-		local util = require("lspconfig.util")
 
 		local cmp = require("cmp")
 
-		local keymap = vim.keymap -- for conciseness
+		local keymap = vim.keymap
 
-		-- `/` cmdline setup.
 		cmp.setup.cmdline("/", {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = {
@@ -45,7 +38,6 @@ return {
 			},
 		})
 
-		-- `:` cmdline setup.
 		cmp.setup.cmdline(":", {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = cmp.config.sources({
@@ -60,12 +52,14 @@ return {
 			}),
 		})
 
-		require("lspconfig").html.setup({})
-		require("lspconfig").gopls.setup({})
-		require("lspconfig").cssls.setup({})
-		require("lspconfig").jsonls.setup({})
-		require("lspconfig").tailwindcss.setup({})
-		require("lspconfig").ts_ls.setup({})
+		local capabilities = cmp_nvim_lsp.default_capabilities()
+
+		vim.lsp.config("html", { capabilities = capabilities })
+		vim.lsp.config("gopls", { capabilities = capabilities })
+		vim.lsp.config("cssls", { capabilities = capabilities })
+		vim.lsp.config("jsonls", { capabilities = capabilities })
+		vim.lsp.config("tailwindcss", { capabilities = capabilities })
+		vim.lsp.config("ts_ls", { capabilities = capabilities })
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -115,9 +109,6 @@ return {
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 			end,
 		})
-
-		-- used to enable autocompletion (assign to every lsp server config)
-		local capabilities = cmp_nvim_lsp.default_capabilities()
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
